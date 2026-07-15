@@ -1,32 +1,26 @@
 name = "cryptoauto"
-type = "service"
-account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
-workers_dev = true
-compatibility_date = "2024-12-16"
+compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
-[env.production]
-name = "cryptoauto-production"
-route = "https://cryptoauto.example.com/*"
-zone_id = "YOUR_ZONE_ID"
-vars = { ENVIRONMENT = "production" }
-
-[env.production.secrets]
-ADMIN_PASSWORD_HASH = ""
-STRIPE_SECRET_KEY = ""
-STRIPE_WEBHOOK_SECRET = ""
-CLAUDE_API_KEY = ""
-JWT_SECRET = ""
+[build]
+command = "npm run build"
 
 [[kv_namespaces]]
 binding = "STATE"
-id = "YOUR_KV_NAMESPACE_ID"
+id = "YOUR_KV_ID"
 
 [[kv_namespaces]]
-binding = "REVENUE_DATA"
-id = "YOUR_REVENUE_KV_ID"
+binding = "USERS"
+id = "YOUR_USERS_KV_ID"
 
-[build]
-command = "npm install"
-cwd = "./"
-main = "src/index.js"
+[[kv_namespaces]]
+binding = "TRADES"
+id = "YOUR_TRADES_KV_ID"
+
+[[kv_namespaces]]
+binding = "METRICS"
+id = "YOUR_METRICS_KV_ID"
+
+[site]
+bucket = "./public"
+entry-point = "./functions"
