@@ -3,15 +3,15 @@ export default {
     const url = new URL(request.url);
     const pathname = url.pathname;
 
-    if (pathname === '/' || pathname === '/index.html') {
-      return new Response(getHTML(), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+    if (pathname === '/' || pathname === '/index.html' || pathname === '/dashboard' || pathname === '/admin' || pathname === '/signup') {
+      return new Response(getHTML(pathname), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
     return new Response(JSON.stringify({ error: 'Not found' }), { status: 404 });
   }
 };
 
-function getHTML() {
+function getHTML(pathname) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,11 +25,10 @@ function getHTML() {
     .version { position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; z-index: 999; }
     
     .navbar { background: #0f172a; border-bottom: 1px solid rgba(16, 185, 129, 0.1); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-    .navbar-brand { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-    .navbar-links { display: flex; gap: 30px; }
+    .navbar-brand { font-size: 20px; font-weight: 700; cursor: pointer; }
+    .navbar-links { display: flex; gap: 30px; align-items: center; }
     .navbar-links a { color: rgba(255, 255, 255, 0.7); font-size: 15px; text-decoration: none; cursor: pointer; }
     .navbar-links a:hover { color: #10b981; }
-    .navbar-links a.admin { color: #10b981; }
     
     .page { display: none; }
     .page.active { display: block; }
@@ -41,6 +40,8 @@ function getHTML() {
     
     .btn-large { padding: 16px 40px; background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 16px; }
     .btn-large:hover { background: #059669; }
+    .btn-secondary { padding: 12px 30px; background: transparent; color: #10b981; border: 2px solid #10b981; border-radius: 8px; cursor: pointer; font-weight: 600; margin-left: 10px; }
+    .btn-secondary:hover { background: rgba(16, 185, 129, 0.1); }
     
     .features { max-width: 1000px; margin-bottom: 100px; }
     .features h2 { font-size: 36px; margin-bottom: 50px; }
@@ -53,14 +54,12 @@ function getHTML() {
     .testimonials h2 { font-size: 36px; margin-bottom: 50px; text-align: center; }
     .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
     .testimonial-card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 30px; position: relative; }
-    .testimonial-card:before { content: "💬"; position: absolute; top: 10px; right: 20px; font-size: 40px; opacity: 0.3; }
     .testimonial-text { font-size: 15px; line-height: 1.7; color: rgba(255, 255, 255, 0.8); margin-bottom: 20px; }
     .testimonial-author { display: flex; align-items: center; gap: 12px; }
     .author-avatar { width: 40px; height: 40px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px; }
     .author-info { text-align: left; }
     .author-name { font-weight: 600; font-size: 14px; }
     .author-title { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
-    .stars { color: #f59e0b; font-size: 12px; }
     
     .pricing-page { padding: 60px 40px; min-height: 100vh; padding-bottom: 120px; }
     .pricing-page h1 { text-align: center; margin-bottom: 60px; font-size: 40px; }
@@ -72,49 +71,60 @@ function getHTML() {
     .price-desc { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 30px; }
     .price-card ul { list-style: none; margin: 30px 0; text-align: left; }
     .price-card li { padding: 10px 0; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-    .price-card li:before { content: "✓ "; color: #10b981; font-weight: 600; margin-right: 8px; }
+    .price-card li:before { content: "+ "; color: #10b981; font-weight: 600; margin-right: 8px; }
     .price-card .btn { width: 100%; padding: 12px; margin-top: 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; background: #10b981; color: white; }
     .price-card .btn:hover { background: #059669; }
     
-    .login { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); align-items: center; justify-content: center; z-index: 1000; }
-    .login.active { display: flex; }
-    .login-card { background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 50px; width: 100%; max-width: 420px; }
-    .login-card h1 { text-align: center; margin-bottom: 35px; font-size: 32px; }
-    .login-card input { width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; margin-bottom: 15px; font-size: 16px; }
-    .login-card input::placeholder { color: rgba(255, 255, 255, 0.5); }
-    .login-card .btn { width: 100%; padding: 14px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
-    .login-card .btn:hover { background: #059669; }
-    .error { background: rgba(239, 68, 68, 0.15); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+    .login-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); align-items: center; justify-content: center; z-index: 1000; }
+    .login-modal.active { display: flex; }
+    .modal-card { background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 50px; width: 100%; max-width: 420px; }
+    .modal-card h1 { text-align: center; margin-bottom: 35px; font-size: 32px; }
+    .modal-card input { width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; margin-bottom: 15px; font-size: 16px; }
+    .modal-card input::placeholder { color: rgba(255, 255, 255, 0.5); }
+    .modal-card .btn { width: 100%; padding: 14px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    .modal-card .btn:hover { background: #059669; }
+    .error-msg { background: rgba(239, 68, 68, 0.15); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+    .success-msg { background: rgba(16, 185, 129, 0.2); color: #86efac; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
     
-    .dashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; flex-direction: column; z-index: 999; }
-    .dashboard.active { display: flex; }
-    .dash-header { background: #1e293b; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .dashboard-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; flex-direction: column; z-index: 999; }
+    .dashboard-container.active { display: flex; }
+    
+    .dash-header { background: #1e293b; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
     .dash-logo { font-size: 20px; font-weight: 700; }
+    .dash-user { display: flex; align-items: center; gap: 15px; }
     .logout-btn { background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-    .logout-btn:hover { background: #dc2626; }
     
-    .dash-content { flex: 1; overflow-y: auto; padding: 30px; padding-bottom: 90px; }
+    .dash-layout { display: flex; flex: 1; overflow: hidden; }
+    .dash-sidebar { width: 250px; background: #1a2332; border-right: 1px solid rgba(16, 185, 129, 0.1); overflow-y: auto; padding: 20px 0; }
+    .sidebar-item { padding: 15px 20px; color: rgba(255, 255, 255, 0.7); cursor: pointer; border-left: 3px solid transparent; }
+    .sidebar-item:hover { color: #10b981; background: rgba(16, 185, 129, 0.05); }
+    .sidebar-item.active { color: #10b981; border-left-color: #10b981; background: rgba(16, 185, 129, 0.1); }
+    
+    .dash-content { flex: 1; overflow-y: auto; padding: 30px 40px; }
     .section { display: none; }
     .section.show { display: block; }
     .section h2 { margin-bottom: 25px; font-size: 28px; }
     
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
     .stat-card { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 25px; text-align: center; }
     .stat-value { font-size: 32px; font-weight: 700; color: #10b981; }
     .stat-label { font-size: 13px; color: rgba(255, 255, 255, 0.6); margin-top: 8px; }
     
-    .settings-box { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 30px; margin-top: 20px; }
-    .settings-box h3 { margin-bottom: 20px; font-size: 18px; }
-    .input-pwd { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; color: white; margin-bottom: 12px; font-size: 16px; }
-    .btn-save { width: 100%; background: #10b981; color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
-    .btn-save:hover { background: #059669; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+    .form-group input, .form-group select { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; color: white; font-size: 16px; }
+    .form-group input::placeholder { color: rgba(255, 255, 255, 0.5); }
     
-    .success { background: rgba(16, 185, 129, 0.2); color: #86efac; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
-    .error-msg { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+    .btn-submit { width: 100%; background: #10b981; color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .btn-submit:hover { background: #059669; }
     
-    .dash-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid rgba(16, 185, 129, 0.2); display: flex; height: 70px; z-index: 100; }
-    .dash-nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; color: rgba(255, 255, 255, 0.6); cursor: pointer; font-size: 11px; }
-    .dash-nav-btn.active { color: #10b981; }
+    .card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 25px; margin-bottom: 20px; }
+    .card h3 { margin-bottom: 15px; }
+    
+    .table { width: 100%; border-collapse: collapse; }
+    .table th { background: rgba(16, 185, 129, 0.1); padding: 12px; text-align: left; font-weight: 600; border-bottom: 1px solid rgba(16, 185, 129, 0.3); }
+    .table td { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .table tr:hover { background: rgba(16, 185, 129, 0.05); }
     
     .live-indicator { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; z-index: 50; }
     .live-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
@@ -125,38 +135,41 @@ function getHTML() {
 <body>
   <div class="version">v3.0</div>
 
-  <div class="login" id="login">
-    <div class="login-card">
-      <h1>💰 CryptoAuto</h1>
+  <div class="login-modal" id="loginModal">
+    <div class="modal-card">
+      <h1>CryptoAuto</h1>
       <div id="loginErr"></div>
-      <input type="email" id="email" value="admin@example.com" placeholder="Email">
-      <input type="password" id="password" placeholder="Password">
+      <input type="email" id="loginEmail" placeholder="Email">
+      <input type="password" id="loginPassword" placeholder="Password">
       <button class="btn" onclick="doLogin()">Login</button>
+      <p style="text-align: center; margin-top: 15px; font-size: 14px; color: rgba(255, 255, 255, 0.6);">
+        No account? <a href="#" onclick="goToSignup()" style="color: #10b981; text-decoration: none;">Sign up</a>
+      </p>
     </div>
   </div>
 
   <div id="mainApp">
     <nav class="navbar">
-      <div class="navbar-brand">💰 CryptoAuto</div>
+      <div class="navbar-brand" onclick="goHome()">CryptoAuto</div>
       <div class="navbar-links">
-        <a onclick="showPage('landing'); return false;">Home</a>
-        <a onclick="showPage('pricing'); return false;">Pricing</a>
-        <a class="admin" onclick="showLogin(); return false;">Admin</a>
+        <a onclick="showPage('landing')">Home</a>
+        <a onclick="showPage('pricing')">Pricing</a>
+        <button class="btn-secondary" onclick="showLogin()">Login</button>
       </div>
     </nav>
 
     <div class="page active" id="landing">
       <div class="landing">
         <div class="hero">
-          <h1>Your Savings Earn 0%. Let AI Make You 2–5% Monthly.</h1>
+          <h1>Your Savings Earn 0%. Let AI Make You 2 to 5 percent Monthly.</h1>
           <p>Passive income from automated crypto trading powered by AI.</p>
-          <button class="btn-large" onclick="showPage('pricing'); return false;">Start Free Trial</button>
+          <button class="btn-large" onclick="goToSignup()">Start Free Trial</button>
         </div>
         <div class="features">
           <h2>Why CryptoAuto?</h2>
           <div class="features-grid">
             <div class="feature"><h3>Smart Trading</h3><p>Intelligent algorithms optimize your trades 24/7 across 4 major exchanges.</p></div>
-            <div class="feature"><h3>Real Results</h3><p>Average 65% win rate with consistent monthly returns.</p></div>
+            <div class="feature"><h3>Real Results</h3><p>Average 65 percent win rate with consistent monthly returns.</p></div>
             <div class="feature"><h3>Secure</h3><p>API-only access, keys stored encrypted. We never touch your funds.</p></div>
             <div class="feature"><h3>Instant Setup</h3><p>Connect your exchange in 2 minutes. Start trading instantly.</p></div>
             <div class="feature"><h3>Low Cost</h3><p>Starting at just 29 dollars per month. Cancel anytime. No hidden fees.</p></div>
@@ -174,11 +187,9 @@ function getHTML() {
                 <div class="author-info">
                   <div class="author-name">James Martinez</div>
                   <div class="author-title">Crypto Trader</div>
-                  <div class="stars">5 stars</div>
                 </div>
               </div>
             </div>
-
             <div class="testimonial-card">
               <div class="testimonial-text">Finally a tool that actually works. Passive income while I sleep. Can not ask for more.</div>
               <div class="testimonial-author">
@@ -186,11 +197,9 @@ function getHTML() {
                 <div class="author-info">
                   <div class="author-name">Sarah Kim</div>
                   <div class="author-title">Investor</div>
-                  <div class="stars">5 stars</div>
                 </div>
               </div>
             </div>
-
             <div class="testimonial-card">
               <div class="testimonial-text">Setup took 2 minutes. Been running for 3 months. Averaging 68 percent win rate. Absolutely worth it.</div>
               <div class="testimonial-author">
@@ -198,7 +207,6 @@ function getHTML() {
                 <div class="author-info">
                   <div class="author-name">Robert Park</div>
                   <div class="author-title">Tech Entrepreneur</div>
-                  <div class="stars">5 stars</div>
                 </div>
               </div>
             </div>
@@ -211,50 +219,244 @@ function getHTML() {
       <div class="pricing-page">
         <h1>Simple, Transparent Pricing</h1>
         <div class="pricing-grid">
-          <div class="price-card"><h3>Free</h3><div class="price">0 dollars</div><div class="price-desc">7-day trial</div><ul><li>1 exchange connection</li><li>Basic grid bot</li><li>Email support</li><li>Manual trades only</li></ul><button class="btn" onclick="alert('Sign up coming soon')">Get Started</button></div>
-          <div class="price-card featured"><h3>Pro</h3><div class="price">29 dollars</div><div class="price-desc">per month</div><ul><li>4 exchange connections</li><li>Advanced grid bots</li><li>24/7 AI automation</li><li>Priority support</li><li>Performance analytics</li></ul><button class="btn" onclick="alert('Subscribe coming soon')">Subscribe</button></div>
-          <div class="price-card"><h3>Enterprise</h3><div class="price">299 dollars</div><div class="price-desc">per month</div><ul><li>Unlimited exchanges</li><li>Custom bot strategies</li><li>Dedicated account manager</li><li>API access</li><li>White-label option</li></ul><button class="btn" onclick="alert('Contact sales coming soon')">Contact Sales</button></div>
+          <div class="price-card"><h3>Free</h3><div class="price">0 dollars</div><div class="price-desc">7-day trial</div><ul><li>1 exchange connection</li><li>Basic grid bot</li><li>Email support</li><li>Manual trades only</li></ul><button class="btn" onclick="goToSignup()">Get Started</button></div>
+          <div class="price-card featured"><h3>Pro</h3><div class="price">29 dollars</div><div class="price-desc">per month</div><ul><li>4 exchange connections</li><li>Advanced grid bots</li><li>24/7 AI automation</li><li>Priority support</li><li>Performance analytics</li></ul><button class="btn" onclick="goToSignup()">Subscribe</button></div>
+          <div class="price-card"><h3>Enterprise</h3><div class="price">299 dollars</div><div class="price-desc">per month</div><ul><li>Unlimited exchanges</li><li>Custom bot strategies</li><li>Dedicated account manager</li><li>API access</li><li>White-label option</li></ul><button class="btn" onclick="goToSignup()">Contact Sales</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="signup">
+      <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px;">
+        <div class="modal-card">
+          <h1 style="margin-bottom: 30px;">Create Account</h1>
+          <div id="signupErr"></div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="signupEmail" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Password (min 8 chars, uppercase, number, symbol)</label>
+            <input type="password" id="signupPassword" placeholder="Strong password">
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" id="signupPasswordConfirm" placeholder="Confirm password">
+          </div>
+          <button class="btn-submit" onclick="doSignup()">Create Account</button>
+          <p style="text-align: center; margin-top: 15px; font-size: 14px; color: rgba(255, 255, 255, 0.6);">
+            Already have account? <a href="#" onclick="showLogin()" style="color: #10b981; text-decoration: none;">Login</a>
+          </p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="dashboard" id="dash">
+  <div class="dashboard-container" id="dashContainer">
     <div class="dash-header">
-      <div class="dash-logo">💰 CryptoAuto Admin</div>
-      <button class="logout-btn" onclick="doLogout(); return false;">Logout</button>
+      <div class="dash-logo" onclick="goHome()">CryptoAuto Dashboard</div>
+      <div class="dash-user">
+        <span id="userEmail"></span>
+        <button class="logout-btn" onclick="doLogout()">Logout</button>
+      </div>
     </div>
-    <div class="dash-content">
-      <div class="section show" id="port">
-        <h2>Portfolio</h2>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-value">12,450 dollars</div><div class="stat-label">Total Balance</div></div>
-          <div class="stat-card"><div class="stat-value">65 percent</div><div class="stat-label">Win Rate</div></div>
+    
+    <div class="dash-layout">
+      <div class="dash-sidebar">
+        <div class="sidebar-item active" onclick="switchSection('portfolio')">Portfolio</div>
+        <div class="sidebar-item" onclick="switchSection('bots')">Trading Bots</div>
+        <div class="sidebar-item" onclick="switchSection('exchanges')">Exchanges</div>
+        <div class="sidebar-item" onclick="switchSection('profile')">Profile</div>
+        <div class="sidebar-item" onclick="switchSection('account')">Account</div>
+        <div class="sidebar-item" onclick="switchSection('billing')">Billing</div>
+        <div id="adminLink" class="sidebar-item" onclick="switchSection('admin')" style="display:none; color: #f59e0b; border-left-color: #f59e0b;">Admin Panel</div>
+      </div>
+
+      <div class="dash-content">
+        <div class="section show" id="portfolio">
+          <h2>Portfolio</h2>
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-value">12,450 dollars</div><div class="stat-label">Total Balance</div></div>
+            <div class="stat-card"><div class="stat-value">3,250 dollars</div><div class="stat-label">Profit (this month)</div></div>
+            <div class="stat-card"><div class="stat-value">65 percent</div><div class="stat-label">Win Rate</div></div>
+            <div class="stat-card"><div class="stat-value">4</div><div class="stat-label">Active Bots</div></div>
+          </div>
+          <div class="card">
+            <h3>Recent Trades</h3>
+            <table class="table">
+              <tr><th>Bot</th><th>Pair</th><th>Type</th><th>Profit</th><th>Time</th></tr>
+              <tr><td>Bot 1</td><td>BTC/USDT</td><td>Buy</td><td>+250 dollars</td><td>2 hours ago</td></tr>
+              <tr><td>Bot 2</td><td>ETH/USDT</td><td>Sell</td><td>+185 dollars</td><td>4 hours ago</td></tr>
+              <tr><td>Bot 3</td><td>XRP/USDT</td><td>Buy</td><td>+120 dollars</td><td>6 hours ago</td></tr>
+            </table>
+          </div>
         </div>
-        <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;">
-          <h3 style="margin-bottom: 10px;">Active Bots: 4</h3>
-          <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6);">Binance - Coinbase - Kraken - Bybit</p>
+
+        <div class="section" id="bots">
+          <h2>Trading Bots</h2>
+          <button class="btn-submit" style="width: auto; margin-bottom: 20px;" onclick="alert('Create bot coming soon')">Create New Bot</button>
+          <div class="card">
+            <h3>Bot 1 - BTC Grid</h3>
+            <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.7);">Status: Active | Exchange: Binance | Pair: BTC/USDT</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div><strong>Grid Range:</strong> 40,000 - 50,000 USDT</div>
+              <div><strong>Grid Levels:</strong> 10</div>
+              <div><strong>Current Profit:</strong> 1,250 dollars</div>
+              <div><strong>Win Rate:</strong> 68%</div>
+            </div>
+            <button class="btn-submit" style="width: auto; margin-top: 15px;" onclick="alert('Coming soon')">Edit</button>
+          </div>
+        </div>
+
+        <div class="section" id="exchanges">
+          <h2>Exchange Connections</h2>
+          <button class="btn-submit" style="width: auto; margin-bottom: 20px;" onclick="alert('Add exchange coming soon')">Add Exchange</button>
+          <div class="card">
+            <h3>Binance</h3>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <label>API Key (masked)</label>
+              <input type="text" value="****...a7f2" disabled>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <label>Status</label>
+              <input type="text" value="Connected - Active" disabled>
+            </div>
+            <button class="btn-submit" style="width: auto; background: #ef4444; margin-top: 10px;" onclick="alert('Disconnect coming soon')">Disconnect</button>
+          </div>
+        </div>
+
+        <div class="section" id="profile">
+          <h2>Profile</h2>
+          <div class="card">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="profileName" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label>Company</label>
+              <input type="text" id="profileCompany" placeholder="Your Company">
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" id="profilePhone" placeholder="+1 (555) 000-0000">
+            </div>
+            <button class="btn-submit" onclick="saveProfile()">Save Profile</button>
+          </div>
+        </div>
+
+        <div class="section" id="account">
+          <h2>Account Settings</h2>
+          <div class="card">
+            <h3>Change Password</h3>
+            <div id="pwdMsg"></div>
+            <div class="form-group">
+              <label>Current Password</label>
+              <input class="form-group" type="password" id="currentPassword">
+            </div>
+            <div class="form-group">
+              <label>New Password (min 8 chars, uppercase, number, symbol)</label>
+              <input class="form-group" type="password" id="newPassword">
+            </div>
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input class="form-group" type="password" id="confirmPassword">
+            </div>
+            <button class="btn-submit" onclick="changePassword()">Update Password</button>
+          </div>
+          <div class="card">
+            <h3>Email Address</h3>
+            <div class="form-group">
+              <label>Current Email</label>
+              <input type="email" id="currentEmail" disabled>
+            </div>
+            <div class="form-group">
+              <label>New Email</label>
+              <input type="email" id="newEmail">
+            </div>
+            <button class="btn-submit" onclick="updateEmail()">Update Email</button>
+          </div>
+          <div class="card">
+            <h3>Two-Factor Authentication</h3>
+            <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.7);">Enable 2FA for enhanced security</p>
+            <button class="btn-submit" onclick="alert('2FA coming soon')">Enable 2FA</button>
+          </div>
+          <div class="card">
+            <h3>Login Activity</h3>
+            <table class="table">
+              <tr><th>Date</th><th>Time</th><th>IP Address</th><th>Device</th></tr>
+              <tr><td>Today</td><td>12:34 PM</td><td>192.168.1.1</td><td>Chrome on Mac</td></tr>
+              <tr><td>Yesterday</td><td>8:45 AM</td><td>192.168.1.2</td><td>Safari on iPhone</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="section" id="billing">
+          <h2>Billing & Subscription</h2>
+          <div class="card">
+            <h3>Current Plan</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+              <div><strong>Plan:</strong> Pro</div>
+              <div><strong>Price:</strong> 29 dollars per month</div>
+              <div><strong>Status:</strong> Active</div>
+              <div><strong>Renewal:</strong> August 16, 2026</div>
+            </div>
+            <button class="btn-submit" style="width: auto; margin-right: 10px;" onclick="alert('Upgrade coming soon')">Upgrade Plan</button>
+            <button class="btn-submit" style="width: auto; background: transparent; color: #10b981; border: 1px solid #10b981;" onclick="alert('Downgrade coming soon')">Downgrade Plan</button>
+          </div>
+          <div class="card">
+            <h3>Payment Method</h3>
+            <div class="form-group">
+              <label>Card on File</label>
+              <input type="text" value="Visa ending in 4242" disabled>
+            </div>
+            <button class="btn-submit" style="width: auto;" onclick="alert('Update payment coming soon')">Update Payment Method</button>
+          </div>
+          <div class="card">
+            <h3>Invoice History</h3>
+            <table class="table">
+              <tr><th>Date</th><th>Amount</th><th>Status</th><th>Action</th></tr>
+              <tr><td>July 16, 2026</td><td>29 dollars</td><td>Paid</td><td><a href="#" style="color: #10b981;">Download</a></td></tr>
+              <tr><td>June 16, 2026</td><td>29 dollars</td><td>Paid</td><td><a href="#" style="color: #10b981;">Download</a></td></tr>
+              <tr><td>May 16, 2026</td><td>0 dollars</td><td>Free Trial</td><td>N/A</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="section" id="admin">
+          <h2>Admin Panel</h2>
+          <div class="card">
+            <h3>Users</h3>
+            <table class="table">
+              <tr><th>Email</th><th>Plan</th><th>Joined</th><th>Status</th><th>Action</th></tr>
+              <tr><td>user1@example.com</td><td>Pro</td><td>June 1</td><td>Active</td><td><button onclick="alert('Message coming soon')" style="background: #10b981; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Message</button></td></tr>
+              <tr><td>user2@example.com</td><td>Free</td><td>July 5</td><td>Active</td><td><button onclick="alert('Message coming soon')" style="background: #10b981; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Message</button></td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Send Notification</h3>
+            <div class="form-group">
+              <label>Select User</label>
+              <select>
+                <option>All Users</option>
+                <option>user1@example.com</option>
+                <option>user2@example.com</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <input type="text" placeholder="Your message...">
+            </div>
+            <button class="btn-submit" onclick="alert('Notification sent coming soon')">Send Notification</button>
+          </div>
+          <div class="card">
+            <h3>Revenue</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div><div style="font-size: 28px; color: #10b981; font-weight: 700;">1,234 dollars</div><div style="color: rgba(255, 255, 255, 0.6);">This Month</div></div>
+              <div><div style="font-size: 28px; color: #10b981; font-weight: 700;">12</div><div style="color: rgba(255, 255, 255, 0.6);">Active Users</div></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="section" id="trades"><h2>Recent Trades</h2><div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;"><p style="color: rgba(255, 255, 255, 0.6);">No recent trades yet.</p></div></div>
-      <div class="section" id="settings">
-        <h2>Settings</h2>
-        <div class="settings-box">
-          <h3>Change Password</h3>
-          <div id="pwdMsg"></div>
-          <input class="input-pwd" type="password" id="curPwd" placeholder="Current password">
-          <input class="input-pwd" type="password" id="newPwd" placeholder="New password">
-          <input class="input-pwd" type="password" id="conPwd" placeholder="Confirm password">
-          <button class="btn-save" onclick="changePwd(); return false;">Update Password</button>
-        </div>
-      </div>
-      <div class="section" id="users"><h2>Users</h2><div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;"><p style="color: rgba(255, 255, 255, 0.6);">Coming soon</p></div></div>
-    </div>
-    <div class="dash-nav">
-      <button class="dash-nav-btn active" onclick="dashTab('port'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">Portfolio</div></button>
-      <button class="dash-nav-btn" onclick="dashTab('trades'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">Trades</div></button>
-      <button class="dash-nav-btn" onclick="dashTab('settings'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">Settings</div></button>
-      <button class="dash-nav-btn" onclick="dashTab('users'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">Users</div></button>
     </div>
   </div>
 
@@ -264,52 +466,143 @@ function getHTML() {
   </div>
 
   <script>
-    function showPage(page) { 
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
-      document.getElementById(page).classList.add('active'); 
-      return false;
+    const users = {
+      'admin@example.com': { password: 'Admin123!', isAdmin: true, name: 'Admin', email: 'admin@example.com', plan: 'Enterprise' },
+      'user@example.com': { password: 'User123!', isAdmin: false, name: 'John Doe', email: 'user@example.com', plan: 'Pro' }
+    };
+
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(page).classList.add('active');
     }
-    function showLogin() { 
-      document.getElementById('mainApp').style.display = 'none'; 
-      document.getElementById('login').classList.add('active'); 
-      return false;
-    }
+
+    function goHome() { location.href = '/'; }
+    function goToSignup() { showPage('signup'); document.getElementById('mainApp').style.display = 'block'; document.getElementById('dashContainer').style.display = 'none'; }
+    function showLogin() { document.getElementById('loginModal').classList.add('active'); }
+
     function doLogin() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      if (email === 'admin@example.com' && password === 'password') {
-        localStorage.setItem('authToken', 'demo-' + Date.now());
-        document.getElementById('login').classList.remove('active');
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      if (users[email] && users[email].password === password) {
+        localStorage.setItem('authToken', btoa(email + ':' + Date.now()));
+        localStorage.setItem('userEmail', email);
+        document.getElementById('loginModal').classList.remove('active');
         document.getElementById('mainApp').style.display = 'none';
-        document.getElementById('dash').classList.add('active');
+        document.getElementById('dashContainer').classList.add('active');
+        document.getElementById('userEmail').textContent = email;
+        document.getElementById('currentEmail').value = email;
+        
+        if (users[email].isAdmin) {
+          document.getElementById('adminLink').style.display = 'block';
+        }
       } else {
-        document.getElementById('loginErr').innerHTML = '<div class="error">Invalid credentials</div>';
+        document.getElementById('loginErr').innerHTML = '<div class="error-msg">Invalid credentials</div>';
       }
       return false;
     }
+
+    function doSignup() {
+      const email = document.getElementById('signupEmail').value;
+      const pwd = document.getElementById('signupPassword').value;
+      const pwdConfirm = document.getElementById('signupPasswordConfirm').value;
+      const err = document.getElementById('signupErr');
+
+      if (!email || !pwd || !pwdConfirm) {
+        err.innerHTML = '<div class="error-msg">All fields required</div>';
+        return false;
+      }
+      if (pwd.length < 8 || !/[A-Z]/.test(pwd) || !/[0-9]/.test(pwd) || !/[!@#\$%\^&\*]/.test(pwd)) {
+        err.innerHTML = '<div class="error-msg">Password must have 8+ chars, uppercase, number, symbol</div>';
+        return false;
+      }
+      if (pwd !== pwdConfirm) {
+        err.innerHTML = '<div class="error-msg">Passwords do not match</div>';
+        return false;
+      }
+      if (users[email]) {
+        err.innerHTML = '<div class="error-msg">Email already exists</div>';
+        return false;
+      }
+
+      users[email] = { password: pwd, isAdmin: false, name: '', email: email, plan: 'Free' };
+      err.innerHTML = '<div class="success-msg">Account created! Login with your credentials.</div>';
+      setTimeout(() => { showLogin(); document.getElementById('loginEmail').value = email; document.getElementById('signupEmail').value = ''; document.getElementById('signupPassword').value = ''; document.getElementById('signupPasswordConfirm').value = ''; }, 1500);
+      return false;
+    }
+
     function doLogout() {
       localStorage.removeItem('authToken');
-      document.getElementById('login').classList.remove('active');
-      document.getElementById('dash').classList.remove('active');
+      localStorage.removeItem('userEmail');
+      document.getElementById('dashContainer').classList.remove('active');
       document.getElementById('mainApp').style.display = 'block';
-      document.getElementById('email').value = 'admin@example.com';
-      document.getElementById('password').value = '';
       showPage('landing');
-      return false;
     }
-    function dashTab(tab) {
+
+    function switchSection(section) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('show'));
-      document.querySelectorAll('.dash-nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(tab).classList.add('show');
-      event.target.closest('.dash-nav-btn').classList.add('active');
+      document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+      document.getElementById(section).classList.add('show');
+      event.target.classList.add('active');
+    }
+
+    function changePassword() {
+      const cur = document.getElementById('currentPassword').value;
+      const newP = document.getElementById('newPassword').value;
+      const con = document.getElementById('confirmPassword').value;
+      const msg = document.getElementById('pwdMsg');
+      const email = localStorage.getItem('userEmail');
+
+      if (!cur || !newP || !con) { msg.innerHTML = '<div class="error-msg">All fields required</div>'; return false; }
+      if (users[email].password !== cur) { msg.innerHTML = '<div class="error-msg">Current password incorrect</div>'; return false; }
+      if (newP.length < 8 || !/[A-Z]/.test(newP) || !/[0-9]/.test(newP) || !/[!@#\$%\^&\*]/.test(newP)) {
+        msg.innerHTML = '<div class="error-msg">New password must have 8+ chars, uppercase, number, symbol</div>';
+        return false;
+      }
+      if (newP !== con) { msg.innerHTML = '<div class="error-msg">Passwords do not match</div>'; return false; }
+
+      users[email].password = newP;
+      msg.innerHTML = '<div class="success-msg">Password updated!</div>';
+      document.getElementById('currentPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
       return false;
     }
-    function changePwd() {
-      const cur = document.getElementById('curPwd').value;
-      const newP = document.getElementById('newPwd').value;
-      const con = document.getElementById('conPwd').value;
-      const msg = document.getElementById('pwdMsg');
-      if (!cur || !newP || !con) { msg.innerHTML = '<div class="error-msg">All fields required</div>'; return false; }
-      if (newP !== con) { msg.innerHTML = '<div class="error-msg">Passwords do not match</div>'; return false; }
-      if (cur === 'password') {
-        msg.innerHTML = '<div class="success">Password updated!</div>'
+
+    function updateEmail() {
+      const newEmail = document.getElementById('newEmail').value;
+      const email = localStorage.getItem('userEmail');
+      if (!newEmail) { alert('Enter new email'); return; }
+      users[newEmail] = users[email];
+      users[newEmail].email = newEmail;
+      delete users[email];
+      localStorage.setItem('userEmail', newEmail);
+      document.getElementById('userEmail').textContent = newEmail;
+      document.getElementById('currentEmail').value = newEmail;
+      document.getElementById('newEmail').value = '';
+      alert('Email updated!');
+    }
+
+    function saveProfile() {
+      const email = localStorage.getItem('userEmail');
+      users[email].name = document.getElementById('profileName').value;
+      users[email].company = document.getElementById('profileCompany').value;
+      alert('Profile saved!');
+    }
+
+    window.addEventListener('load', () => {
+      if (localStorage.getItem('authToken')) {
+        const email = localStorage.getItem('userEmail');
+        document.getElementById('mainApp').style.display = 'none';
+        document.getElementById('dashContainer').classList.add('active');
+        document.getElementById('userEmail').textContent = email;
+        document.getElementById('currentEmail').value = email;
+        if (users[email] && users[email].isAdmin) {
+          document.getElementById('adminLink').style.display = 'block';
+        }
+      }
+    });
+  </script>
+</body>
+</html>`;
+}
