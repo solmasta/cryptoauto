@@ -1,19 +1,13 @@
 {
   "name": "cryptoauto",
   "version": "1.0.0",
-  "description": "AI-powered crypto trading automation",
-  "main": "functions/index.js",
   "scripts": {
-    "build": "echo 'No build required for Cloudflare Functions' && exit 0",
+    "build": "echo 'No build required' && exit 0",
     "deploy": "wrangler deploy",
     "dev": "wrangler dev"
   },
   "dependencies": {
-    "axios": "^1.18.1",
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.6",
-    "jsonwebtoken": "^9.0.3",
-    "ws": "^8.21.1"
+    "stripe": "^15.0.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260715.1",
