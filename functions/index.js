@@ -1,10 +1,12 @@
 /**
- * CryptoAuto - Completely Rewritten Admin Dashboard
+ * CryptoAuto v3 - WITH VERSION BADGE
  */
 
 import Stripe from 'stripe';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+
+const VERSION = 'v3.0';
 
 const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
 <html lang="en">
@@ -16,6 +18,8 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: white; overflow: hidden; }
+    
+    .version-badge { position: fixed; top: 60px; right: 10px; background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; z-index: 999; }
     
     .login-page { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); align-items: center; justify-content: center; z-index: 1000; }
     .login-page.hidden { display: none !important; }
@@ -73,6 +77,8 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
   </style>
 </head>
 <body>
+<div class="version-badge">${VERSION}</div>
+
 <div class="login-page" id="loginPage">
   <div class="login-card">
     <h1>🤖 CryptoAuto</h1>
@@ -139,17 +145,12 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
 
 <script>
   function showTab(tab) {
-    // Hide all sections
     document.querySelectorAll('.portfolio-section, .trades-section, .settings-section, .users-section').forEach(el => {
       el.classList.remove('show');
     });
-    
-    // Remove active from all buttons
     document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.classList.remove('active');
     });
-    
-    // Show the selected section
     if (tab === 'portfolio') {
       document.querySelector('.portfolio-section').classList.add('show');
       document.querySelectorAll('.nav-btn')[0].classList.add('active');
@@ -410,5 +411,4 @@ export default {
           jwt.verify(token, env.JWT_SECRET);
           const { currentPassword } = await request.json();
           const passwordMatch = await bcrypt.compare(currentPassword, env.ADMIN_PASSWORD_HASH);
-          if (!passwordMatch) return new Response(JSON.stringify({ error: 'Current password is incorrect' }), { status: 401 });
-          return new Respons
+          if (!p
