@@ -75,6 +75,12 @@ function getHTML(pathname) {
     .price-card .btn { width: 100%; padding: 12px; margin-top: 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; background: #10b981; color: white; }
     .price-card .btn:hover { background: #059669; }
     
+    .footer { background: #1a2332; border-top: 1px solid rgba(16, 185, 129, 0.1); padding: 40px; text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 14px; }
+    .footer-links { margin-bottom: 20px; }
+    .footer-links a { color: #10b981; text-decoration: none; margin: 0 15px; cursor: pointer; }
+    .footer-links a:hover { text-decoration: underline; }
+    .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px; margin-top: 20px; }
+    
     .login-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); align-items: center; justify-content: center; z-index: 1000; }
     .login-modal.active { display: flex; }
     .modal-card { background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 50px; width: 100%; max-width: 420px; }
@@ -213,6 +219,17 @@ function getHTML(pathname) {
           </div>
         </div>
       </div>
+      <div class="footer">
+        <div class="footer-links">
+          <a onclick="alert('Contact us at support@cryptoauto.com')">Help</a>
+          <a onclick="alert('Contact us at support@cryptoauto.com')">Contact Support</a>
+          <a onclick="alert('Terms of Service coming soon')">Terms</a>
+          <a onclick="alert('Privacy Policy coming soon')">Privacy</a>
+        </div>
+        <div class="footer-bottom">
+          <p>Copyright 2026 CryptoAuto. All rights reserved.<br>support@cryptoauto.com | 1-800-CRYPTO-1</p>
+        </div>
+      </div>
     </div>
 
     <div class="page" id="pricing">
@@ -222,6 +239,18 @@ function getHTML(pathname) {
           <div class="price-card"><h3>Free</h3><div class="price">0 dollars</div><div class="price-desc">7-day trial</div><ul><li>1 exchange connection</li><li>Basic grid bot</li><li>Email support</li><li>Manual trades only</li></ul><button class="btn" onclick="goToSignup()">Get Started</button></div>
           <div class="price-card featured"><h3>Pro</h3><div class="price">29 dollars</div><div class="price-desc">per month</div><ul><li>4 exchange connections</li><li>Advanced grid bots</li><li>24/7 AI automation</li><li>Priority support</li><li>Performance analytics</li></ul><button class="btn" onclick="goToSignup()">Subscribe</button></div>
           <div class="price-card"><h3>Enterprise</h3><div class="price">299 dollars</div><div class="price-desc">per month</div><ul><li>Unlimited exchanges</li><li>Custom bot strategies</li><li>Dedicated account manager</li><li>API access</li><li>White-label option</li></ul><button class="btn" onclick="goToSignup()">Contact Sales</button></div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer-links">
+          <a onclick="showPage('landing')">Home</a>
+          <a onclick="alert('Contact us at support@cryptoauto.com')">Help</a>
+          <a onclick="alert('Contact us at support@cryptoauto.com')">Contact Support</a>
+          <a onclick="alert('Terms of Service coming soon')">Terms</a>
+          <a onclick="alert('Privacy Policy coming soon')">Privacy</a>
+        </div>
+        <div class="footer-bottom">
+          <p>Copyright 2026 CryptoAuto. All rights reserved.<br>support@cryptoauto.com | 1-800-CRYPTO-1</p>
         </div>
       </div>
     </div>
