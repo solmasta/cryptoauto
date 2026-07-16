@@ -155,12 +155,12 @@ function getHTML() {
         <div class="features">
           <h2>Why CryptoAuto?</h2>
           <div class="features-grid">
-            <div class="feature"><h3>₿ Smart Trading</h3><p>Intelligent algorithms optimize your trades 24/7 across 4 major exchanges.</p></div>
-            <div class="feature"><h3>📈 Real Results</h3><p>Average 65% win rate with consistent monthly returns.</p></div>
-            <div class="feature"><h3>🔐 Secure</h3><p>API-only access, keys stored encrypted. We never touch your funds.</p></div>
-            <div class="feature"><h3>⚡ Instant Setup</h3><p>Connect your exchange in 2 minutes. Start trading instantly.</p></div>
-            <div class="feature"><h3>💎 Low Cost</h3><p>Starting at just \$29/month. Cancel anytime. No hidden fees.</p></div>
-            <div class="feature"><h3>🌐 Multi-Exchange</h3><p>Binance, Coinbase, Kraken, Bybit. Trade everywhere at once.</p></div>
+            <div class="feature"><h3>Smart Trading</h3><p>Intelligent algorithms optimize your trades 24/7 across 4 major exchanges.</p></div>
+            <div class="feature"><h3>Real Results</h3><p>Average 65% win rate with consistent monthly returns.</p></div>
+            <div class="feature"><h3>Secure</h3><p>API-only access, keys stored encrypted. We never touch your funds.</p></div>
+            <div class="feature"><h3>Instant Setup</h3><p>Connect your exchange in 2 minutes. Start trading instantly.</p></div>
+            <div class="feature"><h3>Low Cost</h3><p>Starting at just 29 dollars per month. Cancel anytime. No hidden fees.</p></div>
+            <div class="feature"><h3>Multi-Exchange</h3><p>Binance, Coinbase, Kraken, Bybit. Trade everywhere at once.</p></div>
           </div>
         </div>
 
@@ -168,37 +168,37 @@ function getHTML() {
           <h2>Trusted by Traders</h2>
           <div class="testimonials-grid">
             <div class="testimonial-card">
-              <div class="testimonial-text">"Made \$3,450 in my first month. The AI bots are insane. Best crypto investment I've made."</div>
+              <div class="testimonial-text">Made 3,450 dollars in my first month. The AI bots are insane. Best crypto investment I have made.</div>
               <div class="testimonial-author">
                 <div class="author-avatar">JM</div>
                 <div class="author-info">
                   <div class="author-name">James Martinez</div>
                   <div class="author-title">Crypto Trader</div>
-                  <div class="stars">★★★★★</div>
+                  <div class="stars">5 stars</div>
                 </div>
               </div>
             </div>
 
             <div class="testimonial-card">
-              <div class="testimonial-text">"Finally a tool that actually works. Passive income while I sleep. Can't ask for more."</div>
+              <div class="testimonial-text">Finally a tool that actually works. Passive income while I sleep. Can not ask for more.</div>
               <div class="testimonial-author">
                 <div class="author-avatar">SK</div>
                 <div class="author-info">
                   <div class="author-name">Sarah Kim</div>
                   <div class="author-title">Investor</div>
-                  <div class="stars">★★★★★</div>
+                  <div class="stars">5 stars</div>
                 </div>
               </div>
             </div>
 
             <div class="testimonial-card">
-              <div class="testimonial-text">"Setup took 2 minutes. Been running for 3 months. Averaging 68% win rate. Absolutely worth it."</div>
+              <div class="testimonial-text">Setup took 2 minutes. Been running for 3 months. Averaging 68 percent win rate. Absolutely worth it.</div>
               <div class="testimonial-author">
                 <div class="author-avatar">RP</div>
                 <div class="author-info">
                   <div class="author-name">Robert Park</div>
                   <div class="author-title">Tech Entrepreneur</div>
-                  <div class="stars">★★★★★</div>
+                  <div class="stars">5 stars</div>
                 </div>
               </div>
             </div>
@@ -211,9 +211,9 @@ function getHTML() {
       <div class="pricing-page">
         <h1>Simple, Transparent Pricing</h1>
         <div class="pricing-grid">
-          <div class="price-card"><h3>Free</h3><div class="price">\$0</div><div class="price-desc">7-day trial</div><ul><li>1 exchange connection</li><li>Basic grid bot</li><li>Email support</li><li>Manual trades only</li></ul><button class="btn" onclick="alert('Sign up coming soon!')">Get Started</button></div>
-          <div class="price-card featured"><h3>Pro</h3><div class="price">\$29</div><div class="price-desc">/month</div><ul><li>4 exchange connections</li><li>Advanced grid bots</li><li>24/7 AI automation</li><li>Priority support</li><li>Performance analytics</li></ul><button class="btn" onclick="alert('Subscribe coming soon!')">Subscribe</button></div>
-          <div class="price-card"><h3>Enterprise</h3><div class="price">\$299</div><div class="price-desc">/month</div><ul><li>Unlimited exchanges</li><li>Custom bot strategies</li><li>Dedicated account manager</li><li>API access</li><li>White-label option</li></ul><button class="btn" onclick="alert('Contact sales coming soon!')">Contact Sales</button></div>
+          <div class="price-card"><h3>Free</h3><div class="price">0 dollars</div><div class="price-desc">7-day trial</div><ul><li>1 exchange connection</li><li>Basic grid bot</li><li>Email support</li><li>Manual trades only</li></ul><button class="btn" onclick="alert('Sign up coming soon')">Get Started</button></div>
+          <div class="price-card featured"><h3>Pro</h3><div class="price">29 dollars</div><div class="price-desc">per month</div><ul><li>4 exchange connections</li><li>Advanced grid bots</li><li>24/7 AI automation</li><li>Priority support</li><li>Performance analytics</li></ul><button class="btn" onclick="alert('Subscribe coming soon')">Subscribe</button></div>
+          <div class="price-card"><h3>Enterprise</h3><div class="price">299 dollars</div><div class="price-desc">per month</div><ul><li>Unlimited exchanges</li><li>Custom bot strategies</li><li>Dedicated account manager</li><li>API access</li><li>White-label option</li></ul><button class="btn" onclick="alert('Contact sales coming soon')">Contact Sales</button></div>
         </div>
       </div>
     </div>
@@ -226,21 +226,21 @@ function getHTML() {
     </div>
     <div class="dash-content">
       <div class="section show" id="port">
-        <h2>📊 Portfolio</h2>
+        <h2>Portfolio</h2>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-value">\$12,450</div><div class="stat-label">Total Balance</div></div>
-          <div class="stat-card"><div class="stat-value">65%</div><div class="stat-label">Win Rate</div></div>
+          <div class="stat-card"><div class="stat-value">12,450 dollars</div><div class="stat-label">Total Balance</div></div>
+          <div class="stat-card"><div class="stat-value">65 percent</div><div class="stat-label">Win Rate</div></div>
         </div>
         <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;">
           <h3 style="margin-bottom: 10px;">Active Bots: 4</h3>
-          <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6);">₿ Binance • ⊡ Coinbase • ≈ Kraken • ◇ Bybit</p>
+          <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6);">Binance - Coinbase - Kraken - Bybit</p>
         </div>
       </div>
-      <div class="section" id="trades"><h2>📈 Recent Trades</h2><div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;"><p style="color: rgba(255, 255, 255, 0.6);">No recent trades yet.</p></div></div>
+      <div class="section" id="trades"><h2>Recent Trades</h2><div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;"><p style="color: rgba(255, 255, 255, 0.6);">No recent trades yet.</p></div></div>
       <div class="section" id="settings">
-        <h2>⚙️ Settings</h2>
+        <h2>Settings</h2>
         <div class="settings-box">
-          <h3>🔐 Change Password</h3>
+          <h3>Change Password</h3>
           <div id="pwdMsg"></div>
           <input class="input-pwd" type="password" id="curPwd" placeholder="Current password">
           <input class="input-pwd" type="password" id="newPwd" placeholder="New password">
@@ -248,13 +248,13 @@ function getHTML() {
           <button class="btn-save" onclick="changePwd(); return false;">Update Password</button>
         </div>
       </div>
-      <div class="section" id="users"><h2>👥 Users</h2><div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;"><p style="color: rgba(255, 255, 255, 0.6);">Coming soon</p></div></div>
+      <div class="section" id="users"><h2>Users</h2><div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;"><p style="color: rgba(255, 255, 255, 0.6);">Coming soon</p></div></div>
     </div>
     <div class="dash-nav">
-      <button class="dash-nav-btn active" onclick="dashTab('port'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">📊</div>Portfolio</button>
-      <button class="dash-nav-btn" onclick="dashTab('trades'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">📈</div>Trades</button>
-      <button class="dash-nav-btn" onclick="dashTab('settings'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">⚙️</div>Settings</button>
-      <button class="dash-nav-btn" onclick="dashTab('users'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">👥</div>Users</button>
+      <button class="dash-nav-btn active" onclick="dashTab('port'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">Portfolio</div></button>
+      <button class="dash-nav-btn" onclick="dashTab('trades'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">Trades</div></button>
+      <button class="dash-nav-btn" onclick="dashTab('settings'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">Settings</div></button>
+      <button class="dash-nav-btn" onclick="dashTab('users'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">Users</div></button>
     </div>
   </div>
 
@@ -312,5 +312,4 @@ function getHTML() {
       if (!cur || !newP || !con) { msg.innerHTML = '<div class="error-msg">All fields required</div>'; return false; }
       if (newP !== con) { msg.innerHTML = '<div class="error-msg">Passwords do not match</div>'; return false; }
       if (cur === 'password') {
-        msg.innerHTML = '<div class="success">Password updated!</div>';
-        docu
+        msg.innerHTML = '<div class="success">Password updated!</div>'
