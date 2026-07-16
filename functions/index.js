@@ -1,5 +1,5 @@
 /**
- * CryptoAuto v3 - WITH VERSION BADGE
+ * CryptoAuto v3 - SYNTAX FIXED
  */
 
 import Stripe from 'stripe';
@@ -77,7 +77,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
   </style>
 </head>
 <body>
-<div class="version-badge">${VERSION}</div>
+<div class="version-badge">v3.0</div>
 
 <div class="login-page" id="loginPage">
   <div class="login-card">
@@ -105,7 +105,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     <div class="portfolio-section show">
       <h2>📊 Portfolio</h2>
       <div class="stat-grid">
-        <div class="stat-card"><div class="value">\$12,450</div><div class="label">Total</div></div>
+        <div class="stat-card"><div class="value">$12,450</div><div class="label">Total</div></div>
         <div class="stat-card"><div class="value">65%</div><div class="label">Win Rate</div></div>
         <div class="stat-card"><div class="value">+3.2%</div><div class="label">This Month</div></div>
         <div class="stat-card"><div class="value">24</div><div class="label">Active</div></div>
@@ -211,7 +211,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
       });
       const data = await res.json();
       if (data.success) {
-        document.getElementById('passwordMessage').innerHTML = '<div class="success">✓ Password changed!</div>';
+        document.getElementById('passwordMessage').innerHTML = '<div class="success">Password changed!</div>';
         setTimeout(() => {
           document.getElementById('currentPassword').value = '';
           document.getElementById('newPassword').value = '';
@@ -279,7 +279,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
     <div class="pricing-grid">
       <div class="pricing-card">
         <div class="plan-name">Free Trial</div>
-        <div class="price">\$0</div>
+        <div class="price">$0</div>
         <div style="font-size: 13px; margin-bottom: 15px;">7 days</div>
         <button class="btn" onclick="window.location.href='/trial'">Get Started</button>
         <ul class="features">
@@ -291,7 +291,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
       </div>
       <div class="pricing-card">
         <div class="plan-name">Pro</div>
-        <div class="price">\$29</div>
+        <div class="price">$29</div>
         <div style="font-size: 13px; margin-bottom: 15px;">per month</div>
         <button class="btn" onclick="startCheckout('pro')">Start Pro</button>
         <ul class="features">
@@ -303,7 +303,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
       </div>
       <div class="pricing-card">
         <div class="plan-name">Enterprise</div>
-        <div class="price">\$299</div>
+        <div class="price">$299</div>
         <div style="font-size: 13px; margin-bottom: 15px;">per month</div>
         <button class="btn" onclick="startCheckout('enterprise')">Contact Sales</button>
         <ul class="features">
@@ -411,4 +411,4 @@ export default {
           jwt.verify(token, env.JWT_SECRET);
           const { currentPassword } = await request.json();
           const passwordMatch = await bcrypt.compare(currentPassword, env.ADMIN_PASSWORD_HASH);
-          if (!p
+          if (!passwordMatch) retu
