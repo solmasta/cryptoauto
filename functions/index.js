@@ -1,5 +1,5 @@
 /**
- * CryptoAuto - Secure Authentication (Settings & Logout Fixed)
+ * CryptoAuto - Final Fixed Version
  */
 
 import Stripe from 'stripe';
@@ -29,8 +29,8 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     .dashboard.active { display: flex !important; flex-direction: column; }
     .app-header { background: #1e293b; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding: 15px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .app-header .logo { font-size: 20px; font-weight: 700; }
-    .app-header .logout-btn { background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600; }
-    .app-header .logout-btn:active { background: #dc2626; }
+    .logout-btn { background: #ef4444 !important; color: white !important; border: none !important; padding: 10px 20px !important; border-radius: 6px !important; font-size: 14px !important; cursor: pointer !important; font-weight: 600 !important; }
+    .logout-btn:active { background: #dc2626 !important; }
     .content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; }
     .section { display: none; }
     .section.active { display: block !important; }
@@ -40,11 +40,10 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     .stat-card .value { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
     .stat-card .label { font-size: 12px; color: rgba(255, 255, 255, 0.6); }
     .card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px; margin-bottom: 15px; }
-    .card h3 { margin-bottom: 15px; font-size: 16px; }
-    .card input { width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px; color: white; margin-bottom: 12px; font-size: 14px; }
-    .card input::placeholder { color: rgba(255, 255, 255, 0.4); }
-    .btn-save { background: #10b981; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; width: 100%; }
-    .btn-save:active { background: #059669; }
+    .card h3 { margin-bottom: 15px; font-size: 16px; font-weight: 600; }
+    .card input { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; color: white; margin-bottom: 12px; font-size: 14px; }
+    .card input::placeholder { color: rgba(255, 255, 255, 0.5); }
+    .btn-save { background: #10b981 !important; color: white !important; padding: 12px 24px !important; border: none !important; border-radius: 6px !important; cursor: pointer !important; font-weight: 600 !important; font-size: 14px !important; width: 100% !important; }
     .success { background: rgba(16, 185, 129, 0.2); color: #86efac; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; border: 1px solid rgba(16, 185, 129, 0.4); }
     .error-msg { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; border: 1px solid rgba(239, 68, 68, 0.4); }
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid rgba(16, 185, 129, 0.2); display: flex; justify-content: space-around; height: 70px; }
@@ -72,7 +71,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
 <div class="dashboard" id="dashboard">
   <div class="app-header">
     <div class="logo">🚀 CryptoAuto</div>
-    <button class="app-header .logout-btn" onclick="doLogout()">Logout</button>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
   </div>
   <div class="content">
     <div class="section active" id="portfolio">
@@ -115,7 +114,6 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
   async function doLogin() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -163,7 +161,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
         document.getElementById('newPassword').value = '';
         document.getElementById('confirmPassword').value = '';
       } else {
-        document.getElementById('passwordMessage').innerHTML = '<div class="error-msg">' + (data.error || 'Failed to change password') + '</div>';
+        document.getElementById('passwordMessage').innerHTML = '<div class="error-msg">' + (data.error || 'Failed') + '</div>';
       }
     } catch (err) {
       document.getElementById('passwordMessage').innerHTML = '<div class="error-msg">Error: ' + err.message + '</div>';
@@ -401,5 +399,4 @@ export default {
           if (!priceId) {
             return new Response(JSON.stringify({ error: 'Invalid plan' }), { status: 400 });
           }
-          const session = await stripe.checkout.sessions.create({
-            payment_metho
+        
