@@ -1,6 +1,8 @@
 /**
- * CryptoAuto - Buttons Fixed
+ * CryptoAuto - Stripe Integrated Worker
  */
+
+import Stripe from 'stripe';
 
 const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
 <html lang="en">
@@ -21,7 +23,6 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     .form-group label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; }
     .form-group input { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; font-size: 16px; }
     .btn-login { width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-    .btn-login:active { background: #059669; }
 
     .dashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
     .dashboard.active { display: flex !important; flex-direction: column; }
@@ -31,10 +32,8 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     .app-header .logout-btn { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: none; padding: 8px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; }
 
     .content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; }
-
     .section { display: none; }
     .section.active { display: block !important; }
-
     .section h2 { font-size: 20px; margin-bottom: 20px; }
 
     .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
@@ -44,8 +43,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
 
     .card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
 
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid rgba(16, 185, 129, 0.2); display: flex; justify-content: space-around; height: 70px; padding-bottom: env(safe-area-inset-bottom); }
-
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid rgba(16, 185, 129, 0.2); display: flex; justify-content: space-around; height: 70px; }
     .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; cursor: pointer; color: rgba(255, 255, 255, 0.6); font-size: 11px; }
     .nav-item.active { color: #10b981; }
     .nav-item .icon { font-size: 24px; margin-bottom: 2px; }
@@ -71,7 +69,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
 <div class="dashboard" id="dashboard">
   <div class="app-header">
     <div class="logo">🚀 CryptoAuto</div>
-    <button class="logout-btn" onclick="doLogout()">Logout</button>
+    <button class="app-header .logout-btn" onclick="doLogout()">Logout</button>
   </div>
 
   <div class="content">
@@ -103,34 +101,21 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
   </div>
 
   <div class="bottom-nav">
-    <div class="nav-item active" onclick="switchTab('portfolio')">
-      <div class="icon">📊</div>
-      <div>Portfolio</div>
-    </div>
-    <div class="nav-item" onclick="switchTab('trades')">
-      <div class="icon">💹</div>
-      <div>Trades</div>
-    </div>
-    <div class="nav-item" onclick="switchTab('settings')">
-      <div class="icon">⚙️</div>
-      <div>Settings</div>
-    </div>
-    <div class="nav-item" onclick="switchTab('users')">
-      <div class="icon">👥</div>
-      <div>Users</div>
-    </div>
+    <div class="nav-item active" onclick="switchTab('portfolio')"><div class="icon">📊</div><div>Portfolio</div></div>
+    <div class="nav-item" onclick="switchTab('trades')"><div class="icon">💹</div><div>Trades</div></div>
+    <div class="nav-item" onclick="switchTab('settings')"><div class="icon">⚙️</div><div>Settings</div></div>
+    <div class="nav-item" onclick="switchTab('users')"><div class="icon">👥</div><div>Users</div></div>
   </div>
 </div>
 
 <script>
   function doLogin() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    if (email === 'admin@example.com' && password === 'password') {
+    if (document.getElementById('email').value === 'admin@example.com' && 
+        document.getElementById('password').value === 'password') {
       document.getElementById('loginPage').classList.add('hidden');
       document.getElementById('dashboard').classList.add('active');
     } else {
-      alert('Invalid email or password');
+      alert('Invalid credentials');
     }
   }
 
@@ -144,8 +129,6 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
   function doLogout() {
     document.getElementById('loginPage').classList.remove('hidden');
     document.getElementById('dashboard').classList.remove('active');
-    document.getElementById('email').value = 'admin@example.com';
-    document.getElementById('password').value = 'password';
   }
 </script>
 
@@ -166,7 +149,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
     .logo { font-size: 20px; font-weight: 700; }
     nav a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 20px; font-size: 14px; }
     h1 { text-align: center; font-size: 32px; margin-bottom: 40px; }
-    .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 40px; }
+    .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
     .pricing-card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 25px; text-align: center; }
     .plan-name { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
     .price { font-size: 32px; font-weight: 700; margin-bottom: 5px; }
@@ -195,7 +178,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
         <div class="plan-name">Free Trial</div>
         <div class="price">$0</div>
         <div style="font-size: 13px; margin-bottom: 15px;">7 days</div>
-        <button class="btn" onclick="alert('Free trial signup coming soon')">Get Started</button>
+        <button class="btn" onclick="window.location.href='/checkout?plan=trial'">Get Started</button>
         <ul class="features">
           <li>Full access</li>
           <li>1 bot</li>
@@ -208,7 +191,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
         <div class="plan-name">Pro</div>
         <div class="price">$29</div>
         <div style="font-size: 13px; margin-bottom: 15px;">per month</div>
-        <button class="btn" onclick="alert('Stripe checkout coming soon')">Start Pro</button>
+        <button class="btn" onclick="window.location.href='/checkout?plan=pro'">Start Pro</button>
         <ul class="features">
           <li>Unlimited bots</li>
           <li>All 4 exchanges</li>
@@ -221,7 +204,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
         <div class="plan-name">Enterprise</div>
         <div class="price">$299</div>
         <div style="font-size: 13px; margin-bottom: 15px;">per month</div>
-        <button class="btn" onclick="alert('Contact sales coming soon')">Contact Sales</button>
+        <button class="btn" onclick="window.location.href='/checkout?plan=enterprise'">Contact Sales</button>
         <ul class="features">
           <li>Everything in Pro</li>
           <li>Custom strategies</li>
@@ -239,6 +222,7 @@ export default {
     try {
       const url = new URL(request.url);
       const pathname = url.pathname;
+      const searchParams = url.searchParams;
 
       const corsHeaders = {
         'Access-Control-Allow-Origin': '*',
@@ -260,6 +244,54 @@ export default {
         });
       }
 
+      if (pathname === '/checkout' && request.method === 'GET') {
+        const plan = searchParams.get('plan');
+        if (!plan) {
+          return new Response(JSON.stringify({ error: 'Plan required' }), { status: 400 });
+        }
+
+        try {
+          const stripe = new Stripe(env.STRIPE_SECRET_KEY);
+          
+          const priceIds = {
+            pro: env.STRIPE_PRO_PRICE_ID,
+            enterprise: env.STRIPE_ENTERPRISE_PRICE_ID,
+            trial: null
+          };
+
+          if (plan === 'trial') {
+            return new Response(JSON.stringify({ message: 'Trial signup flow' }), { 
+              status: 200,
+              headers: { 'Content-Type': 'application/json' }
+            });
+          }
+
+          const priceId = priceIds[plan];
+          if (!priceId) {
+            return new Response(JSON.stringify({ error: 'Invalid plan' }), { status: 400 });
+          }
+
+          const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+              price: priceId,
+              quantity: 1,
+            }],
+            mode: 'subscription',
+            success_url: `${url.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${url.origin}/pricing`,
+          });
+
+          return new Response(JSON.stringify({ url: session.url }), { 
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          });
+
+        } catch (error) {
+          return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+        }
+      }
+
       if (pathname === '/admin' && request.method === 'GET') {
         return new Response(ADMIN_DASHBOARD_HTML, {
           status: 200,
@@ -274,6 +306,7 @@ export default {
       return new Response(JSON.stringify({ error: 'Not found' }), { status: 404 });
 
     } catch (error) {
+      console.error(error);
       return new Response(JSON.stringify({ error: 'Server error' }), { status: 500 });
     }
   }
