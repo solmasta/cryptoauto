@@ -9,11 +9,3 @@ workers_dev = true
 [env.production]
 name = "cryptoauto-production"
 vars = { ENVIRONMENT = "production" }
-
-[[kv_namespaces]]
-binding = "STATE"
-id = "YOUR_KV_STATE_ID"
-
-[[kv_namespaces]]
-binding = "REVENUE_DATA"
-id = "YOUR_REVENUE_KV_ID"
