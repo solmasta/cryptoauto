@@ -3,22 +3,8 @@ export default {
     const url = new URL(request.url);
     const pathname = url.pathname;
 
-    // Serve the complete HTML app
     if (pathname === '/' || pathname === '/index.html') {
-      return new Response(getHTML(), { headers: { 'Content-Type': 'text/html' } });
-    }
-
-    // API endpoints (optional for future)
-    if (pathname === '/api/auth/login' && request.method === 'POST') {
-      try {
-        const { email, password } = await request.json();
-        if (email === 'admin@example.com' && password === 'password') {
-          return new Response(JSON.stringify({ success: true }), { headers: { 'Content-Type': 'application/json' } });
-        }
-        return new Response(JSON.stringify({ error: 'Invalid credentials' }), { status: 401 });
-      } catch (e) {
-        return new Response(JSON.stringify({ error: 'Error' }), { status: 500 });
-      }
+      return new Response(getHTML(), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
     }
 
     return new Response(JSON.stringify({ error: 'Not found' }), { status: 404 });
@@ -48,7 +34,7 @@ function getHTML() {
     .page { display: none; }
     .page.active { display: block; }
     
-    .landing { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%); }
+    .landing { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%); padding-bottom: 120px; }
     .hero { max-width: 900px; margin-bottom: 80px; }
     .hero h1 { font-size: 56px; line-height: 1.2; margin-bottom: 30px; font-weight: 700; }
     .hero p { font-size: 18px; color: rgba(255, 255, 255, 0.6); margin-bottom: 40px; line-height: 1.6; }
@@ -63,7 +49,7 @@ function getHTML() {
     .feature h3 { margin-bottom: 15px; font-size: 18px; color: #10b981; }
     .feature p { font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
     
-    .pricing-page { padding: 60px 40px; min-height: 100vh; }
+    .pricing-page { padding: 60px 40px; min-height: 100vh; padding-bottom: 120px; }
     .pricing-page h1 { text-align: center; margin-bottom: 60px; font-size: 40px; }
     .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; }
     .price-card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 40px 30px; text-align: center; }
@@ -75,6 +61,7 @@ function getHTML() {
     .price-card li { padding: 10px 0; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
     .price-card li:before { content: "✓ "; color: #10b981; font-weight: 600; margin-right: 8px; }
     .price-card .btn { width: 100%; padding: 12px; margin-top: 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; background: #10b981; color: white; }
+    .price-card .btn:hover { background: #059669; }
     
     .login { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); align-items: center; justify-content: center; z-index: 1000; }
     .login.active { display: flex; }
@@ -83,6 +70,7 @@ function getHTML() {
     .login-card input { width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; margin-bottom: 15px; font-size: 16px; }
     .login-card input::placeholder { color: rgba(255, 255, 255, 0.5); }
     .login-card .btn { width: 100%; padding: 14px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    .login-card .btn:hover { background: #059669; }
     .error { background: rgba(239, 68, 68, 0.15); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
     
     .dashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; flex-direction: column; z-index: 999; }
@@ -106,12 +94,19 @@ function getHTML() {
     .settings-box h3 { margin-bottom: 20px; font-size: 18px; }
     .input-pwd { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; color: white; margin-bottom: 12px; font-size: 16px; }
     .btn-save { width: 100%; background: #10b981; color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .btn-save:hover { background: #059669; }
+    
     .success { background: rgba(16, 185, 129, 0.2); color: #86efac; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
     .error-msg { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
     
     .dash-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid rgba(16, 185, 129, 0.2); display: flex; height: 70px; z-index: 100; }
     .dash-nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; color: rgba(255, 255, 255, 0.6); cursor: pointer; font-size: 11px; }
     .dash-nav-btn.active { color: #10b981; }
+    
+    .live-indicator { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; z-index: 50; }
+    .live-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
+    .live-text { font-size: 14px; font-weight: 600; color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.8); letter-spacing: 2px; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
   </style>
 </head>
 <body>
@@ -131,9 +126,9 @@ function getHTML() {
     <nav class="navbar">
       <div class="navbar-brand">🚀 CryptoAuto</div>
       <div class="navbar-links">
-        <a onclick="showPage('landing')">Home</a>
-        <a onclick="showPage('pricing')">Pricing</a>
-        <a class="admin" onclick="showLogin()">Admin</a>
+        <a onclick="showPage('landing'); return false;">Home</a>
+        <a onclick="showPage('pricing'); return false;">Pricing</a>
+        <a class="admin" onclick="showLogin(); return false;">Admin</a>
       </div>
     </nav>
 
@@ -142,7 +137,7 @@ function getHTML() {
         <div class="hero">
           <h1>Your Savings Earn 0%. Let AI Make You 2–5% Monthly.</h1>
           <p>Passive income from automated crypto trading powered by AI.</p>
-          <button class="btn-large" onclick="showPage('pricing')">Start Free Trial</button>
+          <button class="btn-large" onclick="showPage('pricing'); return false;">Start Free Trial</button>
         </div>
         <div class="features">
           <h2>Why CryptoAuto?</h2>
@@ -151,7 +146,7 @@ function getHTML() {
             <div class="feature"><h3>📊 Real Results</h3><p>Average 65% win rate with consistent monthly returns.</p></div>
             <div class="feature"><h3>🔒 Secure & Safe</h3><p>API-only access, keys stored encrypted. We never touch your funds.</p></div>
             <div class="feature"><h3>⚡ Easy Setup</h3><p>Connect your exchange in 2 minutes. Start trading instantly.</p></div>
-            <div class="feature"><h3>💰 Affordable</h3><p>Starting at just $29/month. Cancel anytime. No hidden fees.</p></div>
+            <div class="feature"><h3>💰 Affordable</h3><p>Starting at just \$29/month. Cancel anytime. No hidden fees.</p></div>
             <div class="feature"><h3>🎯 Multiple Exchanges</h3><p>Binance, Coinbase, Kraken, Bybit. Trade everywhere at once.</p></div>
           </div>
         </div>
@@ -162,9 +157,9 @@ function getHTML() {
       <div class="pricing-page">
         <h1>Simple, Transparent Pricing</h1>
         <div class="pricing-grid">
-          <div class="price-card"><h3>Free</h3><div class="price">\$0</div><div class="price-desc">7-day trial</div><ul><li>1 exchange connection</li><li>Basic grid bot</li><li>Email support</li><li>Manual trades only</li></ul><button class="btn">Get Started</button></div>
-          <div class="price-card featured"><h3>Pro</h3><div class="price">\$29</div><div class="price-desc">/month</div><ul><li>4 exchange connections</li><li>Advanced grid bots</li><li>24/7 AI automation</li><li>Priority support</li><li>Performance analytics</li></ul><button class="btn">Subscribe</button></div>
-          <div class="price-card"><h3>Enterprise</h3><div class="price">\$299</div><div class="price-desc">/month</div><ul><li>Unlimited exchanges</li><li>Custom bot strategies</li><li>Dedicated account manager</li><li>API access</li><li>White-label option</li></ul><button class="btn">Contact Sales</button></div>
+          <div class="price-card"><h3>Free</h3><div class="price">\$0</div><div class="price-desc">7-day trial</div><ul><li>1 exchange connection</li><li>Basic grid bot</li><li>Email support</li><li>Manual trades only</li></ul><button class="btn" onclick="alert('Sign up coming soon!')">Get Started</button></div>
+          <div class="price-card featured"><h3>Pro</h3><div class="price">\$29</div><div class="price-desc">/month</div><ul><li>4 exchange connections</li><li>Advanced grid bots</li><li>24/7 AI automation</li><li>Priority support</li><li>Performance analytics</li></ul><button class="btn" onclick="alert('Subscribe coming soon!')">Subscribe</button></div>
+          <div class="price-card"><h3>Enterprise</h3><div class="price">\$299</div><div class="price-desc">/month</div><ul><li>Unlimited exchanges</li><li>Custom bot strategies</li><li>Dedicated account manager</li><li>API access</li><li>White-label option</li></ul><button class="btn" onclick="alert('Contact sales coming soon!')">Contact Sales</button></div>
         </div>
       </div>
     </div>
@@ -173,7 +168,7 @@ function getHTML() {
   <div class="dashboard" id="dash">
     <div class="dash-header">
       <div class="dash-logo">🚀 CryptoAuto Admin</div>
-      <button class="logout-btn" onclick="doLogout()">Logout</button>
+      <button class="logout-btn" onclick="doLogout(); return false;">Logout</button>
     </div>
     <div class="dash-content">
       <div class="section show" id="port">
@@ -196,22 +191,35 @@ function getHTML() {
           <input class="input-pwd" type="password" id="curPwd" placeholder="Current password">
           <input class="input-pwd" type="password" id="newPwd" placeholder="New password">
           <input class="input-pwd" type="password" id="conPwd" placeholder="Confirm password">
-          <button class="btn-save" onclick="changePwd()">Update Password</button>
+          <button class="btn-save" onclick="changePwd(); return false;">Update Password</button>
         </div>
       </div>
       <div class="section" id="users"><h2>👥 Users</h2><div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;"><p style="color: rgba(255, 255, 255, 0.6);">Coming soon</p></div></div>
     </div>
     <div class="dash-nav">
-      <button class="dash-nav-btn active" onclick="dashTab('port')"><div style="font-size: 24px; margin-bottom: 2px;">📊</div>Portfolio</button>
-      <button class="dash-nav-btn" onclick="dashTab('trades')"><div style="font-size: 24px; margin-bottom: 2px;">💹</div>Trades</button>
-      <button class="dash-nav-btn" onclick="dashTab('settings')"><div style="font-size: 24px; margin-bottom: 2px;">⚙️</div>Settings</button>
-      <button class="dash-nav-btn" onclick="dashTab('users')"><div style="font-size: 24px; margin-bottom: 2px;">👥</div>Users</button>
+      <button class="dash-nav-btn active" onclick="dashTab('port'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">📊</div>Portfolio</button>
+      <button class="dash-nav-btn" onclick="dashTab('trades'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">💹</div>Trades</button>
+      <button class="dash-nav-btn" onclick="dashTab('settings'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">⚙️</div>Settings</button>
+      <button class="dash-nav-btn" onclick="dashTab('users'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">👥</div>Users</button>
     </div>
   </div>
 
+  <div class="live-indicator">
+    <div class="live-dot"></div>
+    <div class="live-text">LIVE</div>
+  </div>
+
   <script>
-    function showPage(page) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(page).classList.add('active'); }
-    function showLogin() { document.getElementById('mainApp').style.display = 'none'; document.getElementById('login').classList.add('active'); }
+    function showPage(page) { 
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
+      document.getElementById(page).classList.add('active'); 
+      return false;
+    }
+    function showLogin() { 
+      document.getElementById('mainApp').style.display = 'none'; 
+      document.getElementById('login').classList.add('active'); 
+      return false;
+    }
     function doLogin() {
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
@@ -223,6 +231,7 @@ function getHTML() {
       } else {
         document.getElementById('loginErr').innerHTML = '<div class="error">Invalid credentials</div>';
       }
+      return false;
     }
     function doLogout() {
       localStorage.removeItem('authToken');
@@ -232,20 +241,22 @@ function getHTML() {
       document.getElementById('email').value = 'admin@example.com';
       document.getElementById('password').value = '';
       showPage('landing');
+      return false;
     }
     function dashTab(tab) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('show'));
       document.querySelectorAll('.dash-nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById(tab).classList.add('show');
       event.target.closest('.dash-nav-btn').classList.add('active');
+      return false;
     }
     function changePwd() {
       const cur = document.getElementById('curPwd').value;
       const newP = document.getElementById('newPwd').value;
       const con = document.getElementById('conPwd').value;
       const msg = document.getElementById('pwdMsg');
-      if (!cur || !newP || !con) { msg.innerHTML = '<div class="error-msg">All fields required</div>'; return; }
-      if (newP !== con) { msg.innerHTML = '<div class="error-msg">Passwords do not match</div>'; return; }
+      if (!cur || !newP || !con) { msg.innerHTML = '<div class="error-msg">All fields required</div>'; return false; }
+      if (newP !== con) { msg.innerHTML = '<div class="error-msg">Passwords do not match</div>'; return false; }
       if (cur === 'password') {
         msg.innerHTML = '<div class="success">Password updated!</div>';
         document.getElementById('curPwd').value = '';
@@ -254,6 +265,7 @@ function getHTML() {
       } else {
         msg.innerHTML = '<div class="error-msg">Current password incorrect</div>';
       }
+      return false;
     }
     window.addEventListener('load', () => { if (localStorage.getItem('authToken')) { document.getElementById('mainApp').style.display = 'none'; document.getElementById('dash').classList.add('active'); } });
   </script>
