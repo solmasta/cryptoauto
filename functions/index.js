@@ -1,5 +1,5 @@
 /**
- * CryptoAuto - Final Fixed Version
+ * CryptoAuto - Cache Busting Version
  */
 
 import Stripe from 'stripe';
@@ -11,13 +11,16 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>CryptoAuto Admin</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>CryptoAuto Admin - v2</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; height: 100%; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: white; overflow: hidden; }
     .login-page { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); align-items: center; justify-content: center; z-index: 1000; }
-    .login-page.hidden { display: none !important; }
+    .login-page.hidden { display: none; }
     .login-card { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 30px 20px; width: 100%; max-width: 380px; }
     .login-card h1 { margin-bottom: 25px; font-size: 28px; text-align: center; }
     .form-group { margin-bottom: 15px; }
@@ -25,15 +28,15 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     .form-group input { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; font-size: 16px; }
     .btn-login { width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
     .error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; }
-    .dashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
-    .dashboard.active { display: flex !important; flex-direction: column; }
+    .dashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; flex-direction: column; }
+    .dashboard.active { display: flex; }
     .app-header { background: #1e293b; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding: 15px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .app-header .logo { font-size: 20px; font-weight: 700; }
-    .logout-btn { background: #ef4444 !important; color: white !important; border: none !important; padding: 10px 20px !important; border-radius: 6px !important; font-size: 14px !important; cursor: pointer !important; font-weight: 600 !important; }
-    .logout-btn:active { background: #dc2626 !important; }
+    .logout-btn { background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 600; }
+    .logout-btn:active { background: #dc2626; }
     .content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; }
     .section { display: none; }
-    .section.active { display: block !important; }
+    .section.active { display: block; }
     .section h2 { font-size: 20px; margin-bottom: 20px; }
     .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
     .stat-card { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 15px; text-align: center; }
@@ -43,7 +46,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     .card h3 { margin-bottom: 15px; font-size: 16px; font-weight: 600; }
     .card input { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; color: white; margin-bottom: 12px; font-size: 14px; }
     .card input::placeholder { color: rgba(255, 255, 255, 0.5); }
-    .btn-save { background: #10b981 !important; color: white !important; padding: 12px 24px !important; border: none !important; border-radius: 6px !important; cursor: pointer !important; font-weight: 600 !important; font-size: 14px !important; width: 100% !important; }
+    .btn-save { background: #10b981; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; width: 100%; }
     .success { background: rgba(16, 185, 129, 0.2); color: #86efac; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; border: 1px solid rgba(16, 185, 129, 0.4); }
     .error-msg { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; border: 1px solid rgba(239, 68, 68, 0.4); }
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid rgba(16, 185, 129, 0.2); display: flex; justify-content: space-around; height: 70px; }
@@ -77,7 +80,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     <div class="section active" id="portfolio">
       <h2>📊 Portfolio</h2>
       <div class="stat-grid">
-        <div class="stat-card"><div class="value">$12,450</div><div class="label">Total</div></div>
+        <div class="stat-card"><div class="value">\$12,450</div><div class="label">Total</div></div>
         <div class="stat-card"><div class="value">65%</div><div class="label">Win Rate</div></div>
         <div class="stat-card"><div class="value">+3.2%</div><div class="label">This Month</div></div>
         <div class="stat-card"><div class="value">24</div><div class="label">Active</div></div>
@@ -169,6 +172,7 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
   }
 
   function switchTab(tabName) {
+    console.log('Switching to:', tabName);
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     document.getElementById(tabName).classList.add('active');
@@ -198,6 +202,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>Pricing</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -215,10 +220,6 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
     .features { list-style: none; text-align: left; font-size: 13px; }
     .features li { padding: 8px 0; color: rgba(255,255,255,0.8); }
     .features li:before { content: "✓ "; color: #10b981; margin-right: 8px; }
-    @media (min-width: 768px) {
-      .pricing-grid { grid-template-columns: repeat(3, 1fr); }
-      h1 { font-size: 48px; }
-    }
   </style>
 </head>
 <body>
@@ -231,7 +232,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
     <div class="pricing-grid">
       <div class="pricing-card">
         <div class="plan-name">Free Trial</div>
-        <div class="price">$0</div>
+        <div class="price">\$0</div>
         <div style="font-size: 13px; margin-bottom: 15px;">7 days</div>
         <button class="btn" onclick="window.location.href='/trial'">Get Started</button>
         <ul class="features">
@@ -243,7 +244,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
       </div>
       <div class="pricing-card">
         <div class="plan-name">Pro</div>
-        <div class="price">$29</div>
+        <div class="price">\$29</div>
         <div style="font-size: 13px; margin-bottom: 15px;">per month</div>
         <button class="btn" onclick="startCheckout('pro')">Start Pro</button>
         <ul class="features">
@@ -255,7 +256,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
       </div>
       <div class="pricing-card">
         <div class="plan-name">Enterprise</div>
-        <div class="price">$299</div>
+        <div class="price">\$299</div>
         <div style="font-size: 13px; margin-bottom: 15px;">per month</div>
         <button class="btn" onclick="startCheckout('enterprise')">Contact Sales</button>
         <ul class="features">
@@ -323,7 +324,7 @@ const TRIAL_SIGNUP_HTML = `<!DOCTYPE html>
   <script>
     function handleSignup(e) {
       e.preventDefault();
-      alert('Trial account created! Check your email to verify.');
+      alert('Trial account created!');
       window.location.href = '/';
     }
   </script>
@@ -340,6 +341,9 @@ export default {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
       };
 
       if (pathname === '/api/auth/login' && request.method === 'POST') {
@@ -353,7 +357,7 @@ export default {
             return new Response(JSON.stringify({ error: 'Invalid email or password' }), { status: 401 });
           }
           const token = jwt.sign({ email }, env.JWT_SECRET, { expiresIn: '7d' });
-          return new Response(JSON.stringify({ token }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          return new Response(JSON.stringify({ token }), { status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders } });
         } catch (error) {
           return new Response(JSON.stringify({ error: 'Login failed' }), { status: 500 });
         }
@@ -397,6 +401,4 @@ export default {
           const priceIds = { pro: env.STRIPE_PRO_PRICE_ID, enterprise: env.STRIPE_ENTERPRISE_PRICE_ID };
           const priceId = priceIds[plan];
           if (!priceId) {
-            return new Response(JSON.stringify({ error: 'Invalid plan' }), { status: 400 });
-          }
-        
+            return new Response(JSON.stringify({ erro
