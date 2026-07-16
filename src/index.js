@@ -539,7 +539,7 @@ function getHTML(pathname) {
     }
 
     function goHome() { location.href = '/'; }
-    function goToSignup() { showPage('signup'); document.getElementById('mainApp').style.display = 'block'; document.getElementById('dashContainer').style.display = 'none'; }
+    function goToSignup() { document.getElementById('loginModal').classList.remove('active'); showPage('signup'); document.getElementById('mainApp').style.display = 'block'; document.getElementById('dashContainer').classList.remove('active'); document.getElementById('dashContainer').style.display = 'none'; }
     function showLogin() { document.getElementById('loginModal').classList.add('active'); }
 
     function doLogin() {
